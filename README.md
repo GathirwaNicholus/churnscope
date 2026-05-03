@@ -29,5 +29,3 @@ Python · Scikit-learn (Random Forest) · Flask · Chart.js
 ```
 POST /api/predict  →  { "churn_probability": 0.78, "prediction": "Churn", "risk_level": "High" }
 ```
-
-See `PROJECT_BIBLE.md` for full documentation.
