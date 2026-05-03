@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% block title %}Analytics — ChurnScope{% endblock %}
+
+{% block content %}
+<header class="page-header">
+  <div>
+    <p class="page-label">Exploratory Analysis &amp; Model Performance</p>
+    <h1 class="page-title">Analytics</h1>
+  </div>
+  <div class="header-meta mono">
+    Accuracy {{ (metrics.accuracy * 100) | round(1) }}% &nbsp;·&nbsp; AUC {{ metrics.roc_auc }}
+  </div>
+</header>
+
+<!-- Model Metrics Row -->
+<section class="metrics-row">
+  <div class="metric-tile">
+    <p class="tile-label">Accuracy</p>
+    <p class="tile-val">{{ (metrics.accuracy * 100) | round(1) }}%</p>
+  </div>
+  <div class="metric-tile">
+    <p class="tile-label">Precision</p>
+    <p class="tile-val">{{ (metrics.precision * 100) | round(1) }}%</p>
+  </div>
+  <div class="metric-tile">
+    <p class="tile-label">Recall</p>
+    <p class="tile-val">{{ (metrics.recall * 100) | round(1) }}%</p>
+  </div>
+  <div class="metric-tile">
+    <p class="tile-label">F1 Score</p>
+    <p class="tile-val">{{ (metrics.f1 * 100) | round(1) }}%</p>
+  </div>
+  <div class="metric-tile metric-tile-highlight">
+    <p class="tile-label">ROC-AUC</p>
+    <p class="tile-val">{{ metrics.roc_auc }}</p>
+  </div>
+</section>
+
+<!-- Charts Grid -->
+<section class="charts-grid">
+
+  <div class="chart-card chart-card-wide">
+    <p class="chart-title">Customer Tenure vs Churn (months)</p>
+    <canvas id="tenureChart" height="90"></canvas>
+  </div>
+
+  <div class="chart-card">
+    <p class="chart-title">Churn Rate by Contract Type</p>
+    <canvas id="contractChart" height="180"></canvas>
+  </div>
+
+  <div class="chart-card">
+    <p class="chart-title">Churn Rate by Internet Service</p>
+    <canvas id="internetChart" height="180"></canvas>
+  </div>
+
+  <div class="chart-card">
+    <p class="chart-title">Monthly Charges Distribution</p>
+    <canvas id="chargeChart" height="180"></canvas>
+  </div>
+
+  <div class="chart-card">
+    <p class="chart-title">Confusion Matrix</p>
+    <div class="cm-wrapper" id="cmWrapper"></div>
+  </div>
+
+  <div class="chart-card chart-card-wide">
+    <p class="chart-title">Top Feature Importances</p>
+    <canvas id="featChart" height="90"></canvas>
+  </div>
+
+  <div class="chart-card">
+    <p class="chart-title">ROC Curve</p>
+    <canvas id="rocChart" height="200"></canvas>
+  </div>
+
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  const CHART_DATA = {{ chart_data | safe }};
+  initDashboardCharts(CHART_DATA);
+</script>
+{% endblock %}

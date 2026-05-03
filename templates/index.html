@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% block title %}Overview — ChurnScope{% endblock %}
+
+{% block content %}
+<header class="page-header">
+  <div>
+    <p class="page-label">Customer Retention Intelligence</p>
+    <h1 class="page-title">Overview</h1>
+  </div>
+  <div class="header-meta">
+    <span class="status-dot"></span> Model active
+  </div>
+</header>
+
+<section class="kpi-grid">
+  <div class="kpi-card kpi-primary">
+    <p class="kpi-label">Total Customers</p>
+    <p class="kpi-value">{{ "{:,}".format(summary.total_customers) }}</p>
+    <p class="kpi-sub">in dataset</p>
+  </div>
+  <div class="kpi-card kpi-danger">
+    <p class="kpi-label">Churn Rate</p>
+    <p class="kpi-value">{{ summary.churn_rate }}<span class="kpi-unit">%</span></p>
+    <p class="kpi-sub">{{ "{:,}".format(summary.churn_count) }} customers lost</p>
+  </div>
+  <div class="kpi-card">
+    <p class="kpi-label">Avg. Tenure</p>
+    <p class="kpi-value">{{ summary.avg_tenure }}<span class="kpi-unit">mo</span></p>
+    <p class="kpi-sub">months of service</p>
+  </div>
+  <div class="kpi-card">
+    <p class="kpi-label">Avg. Monthly Charge</p>
+    <p class="kpi-value">$<span>{{ summary.avg_monthly }}</span></p>
+    <p class="kpi-sub">per customer</p>
+  </div>
+  <div class="kpi-card kpi-accent">
+    <p class="kpi-label">Model Accuracy</p>
+    <p class="kpi-value">{{ summary.model_accuracy }}<span class="kpi-unit">%</span></p>
+    <p class="kpi-sub">on held-out test set</p>
+  </div>
+  <div class="kpi-card kpi-accent">
+    <p class="kpi-label">ROC-AUC Score</p>
+    <p class="kpi-value">{{ summary.roc_auc }}</p>
+    <p class="kpi-sub">area under curve</p>
+  </div>
+</section>
+
+<section class="intro-grid">
+  <div class="intro-card">
+    <h2>What is this?</h2>
+    <p>ChurnScope is a machine-learning pipeline that predicts which telecom customers are likely to cancel their subscription. It uses a <strong>Random Forest classifier</strong> trained on customer demographics, service usage, and billing data.</p>
+    <p>The goal: give retention teams an early-warning signal so they can intervene before a customer churns.</p>
+  </div>
+  <div class="intro-card">
+    <h2>How to use</h2>
+    <ol class="steps-list">
+      <li><span class="step-num">01</span><span>Go to <strong>Analytics</strong> to explore the dataset and model performance charts.</span></li>
+      <li><span class="step-num">02</span><span>Go to <strong>Predict</strong> to enter a single customer's details and get a real-time churn probability.</span></li>
+      <li><span class="step-num">03</span><span>Use the <code>/api/predict</code> endpoint to integrate predictions into your own system.</span></li>
+    </ol>
+  </div>
+  <div class="intro-card">
+    <h2>Dataset</h2>
+    <p>Synthetic Telco Customer Churn dataset ({{ "{:,}".format(summary.total_customers) }} rows), modelled after the IBM Telco Churn benchmark. Features include contract type, internet service, tenure, billing, and add-on services.</p>
+    <p class="tag-row">
+      <span class="tag">Random Forest</span>
+      <span class="tag">Scikit-learn</span>
+      <span class="tag">Flask</span>
+      <span class="tag">Chart.js</span>
+    </p>
+  </div>
+</section>
+{% endblock %}
